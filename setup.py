@@ -8,5 +8,5 @@ setup(name='Hitched',
       author='Dan Thompson',
       author_email='d.thompso@yahoo.com',
       packages=find_packages(),
-      install_requires=['CherryPy==10.0.0', 'cheroot==5.0.1', 'jaraco.compat==1.2', 'jaraco.timing==1.3.1', 'portend==1.7', 'pypiwin32==219', 'pytz==2016.10', 'six==1.10.0', 'tempora==1.6.1']
+      install_requires=['CherryPy==10.0.0', 'cheroot==5.0.1', 'jaraco.compat==1.2', 'jaraco.timing==1.3.1', 'portend==1.7', 'pytz==2016.10', 'six==1.10.0', 'tempora==1.6.1']
      )
