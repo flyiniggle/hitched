@@ -6,3 +6,4 @@ node_modules/**
 annotated/*
 annotated/**
 *.log
+data/*
