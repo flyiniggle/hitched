@@ -1,15 +1,15 @@
 import os
 import cherrypy
-import pymongo
+from bson.json_util import dumps
 
 import files
 
+from lib.invitationservice import InvitationService
+from lib.servererror import ServerError
+
 
 class application(object):
-    m = None
-    cursor = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'], int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
-    db = cursor.hitched
-    invitations = db.invitations
+    invitations_service = InvitationService()
 
     @cherrypy.expose
     def index(self):
@@ -23,11 +23,19 @@ class application(object):
 
     @cherrypy.expose
     def guest_address(self, address):
-        guest = self.invitations.find_one({"addressLine1": address})
-        return guest
+        guest = self.invitations_service.get_invitation(address=address)
+
+        if hasattr(guest, "error"):
+            return dumps(ServerError("The record you were searching for could not be found."))
+        else:
+            return dumps(guest)
 
     @cherrypy.expose
     def guest_name(self, name):
-        guest = self.invitations.find_one({"First Name": name})
-        return guest
+        guest = self.invitations_service.get_invitation(name=name)
+
+        if hasattr(guest, "error"):
+            return dumps(ServerError("The record you were searching for could not be found."))
+        else:
+            return dumps(guest)
 
