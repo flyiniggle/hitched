@@ -247,11 +247,15 @@
                 </div>
                 <div class="col-lg-4 col-lg-offset-2 text-center">
                     <h3>Name:</h3>
-                    <input type="text"/>
+                    <input type="text" data-bind="textInput: name, disable: address"/>
                 </div>
                 <div class="col-lg-4 text-center">
                     <h3>Address:</h3>
-                    <input type="text"/>
+                    <input type="text" data-bind="textInput: address, disable: name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
                 </div>
             </div>
         </div>
@@ -259,6 +263,9 @@
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Knockout -->
+    <script src="vendor/knockout/knockout-3.4.0.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>

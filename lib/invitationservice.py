@@ -11,7 +11,7 @@ class InvitationService(object):
         if name:
             query = {"First Name": name}
         elif address:
-            query = {"address": address}
+            query = {"Address": address}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
         guest = self.invitations.find(query)

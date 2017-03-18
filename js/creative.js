@@ -61,4 +61,45 @@
         }
     });
 
+    function RSVPModel() {
+        this.name = ko.observable("");
+        this.address = ko.observable("");
+        this.guests = ko.observableArray([]);
+        this.isCamping = ko.observable(false);
+        this.regrets = ko.observable(false);
+        this.enableLookup = ko.computed(function() {
+            if (this.name()) {
+                return this.name();
+            } else if (this.address()) {
+                return this.address();
+            } else {
+                return false;
+            }
+        }.bind(this)).extend({throttle: 750});
+
+        this.enableLookup.subscribe(function() {
+            var url, data;
+
+            if (this.name() === "" && this.address() === "") {
+                return;
+            }
+
+            url = this.name() ? "/guest_name" : "/guest_address";
+            data = this.name() ? {name: encodeURIComponent(this.name())} : {address: encodeURIComponent(this.address())};
+
+            $.get(url, data, function(result) {
+                console.log(result);
+            });
+        }.bind(this));
+    }
+
+    function GuestModel(name) {
+        var guestName = name || "";
+
+        this.name = ko.observable(guestName);
+        this.isVegetarain = ko.observable(false);
+    }
+
+    ko.applyBindings(new RSVPModel());
+
 })(jQuery); // End of use strict

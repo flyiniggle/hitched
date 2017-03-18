@@ -1,6 +1,7 @@
 import os
 import cherrypy
 from bson.json_util import dumps
+import urlparse
 
 import files
 
@@ -23,7 +24,7 @@ class application(object):
 
     @cherrypy.expose
     def guest_address(self, address):
-        guest = self.invitations_service.get_invitation(address=address)
+        guest = self.invitations_service.get_invitation(address=urlparse.unquote(str(address)))
 
         if hasattr(guest, "error"):
             return dumps(ServerError("The record you were searching for could not be found."))
@@ -32,7 +33,7 @@ class application(object):
 
     @cherrypy.expose
     def guest_name(self, name):
-        guest = self.invitations_service.get_invitation(name=name)
+        guest = self.invitations_service.get_invitation(name=urlparse.unquote(str(name)))
 
         if hasattr(guest, "error"):
             return dumps(ServerError("The record you were searching for could not be found."))
