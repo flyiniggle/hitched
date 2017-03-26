@@ -88,19 +88,18 @@
             data = self.name() ? {name: encodeURIComponent(self.name())} : {address: encodeURIComponent(self.address())};
 
             $.get(url, data, function(result) {
-            	var responseJSON = JSON.parse(result),
-					plusOne, guests;
+            	var responseJSON = JSON.parse(result);
 
 				if(responseJSON.error) {
 					return;
 				}
 
-                responseJSON["Guests"].forEach(function(guest) {
-                    self.guests.push(new GuestModel(guest.name));
+                responseJSON.Guests.forEach(function(guest) {
+                    self.guests.push(new GuestModel(guest.Name));
                 });
 
 				if(responseJSON["Plus One"] === true) {
-					self.guests.push(new GuestModel);
+					self.guests.push(new GuestModel());
 				}
             });
         });
