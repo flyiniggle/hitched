@@ -84,8 +84,10 @@
                 return;
             }
 
+			self.guests([]);
+
             url = self.name() ? "/guest_name" : "/guest_address";
-            data = self.name() ? {name: encodeURIComponent(self.name())} : {address: encodeURIComponent(self.address())};
+            data = self.name() ? {name: encodeURIComponent(self.name().trim().toLowerCase())} : {address: encodeURIComponent(self.address().trim().toLowerCase())};
 
             $.get(url, data, function(result) {
             	var responseJSON = JSON.parse(result);

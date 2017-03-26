@@ -3,6 +3,10 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+.rsvp {
+  margin-top: 40px;
+  min-height: 500px;
+}
 html,
 body {
   height: 100%;

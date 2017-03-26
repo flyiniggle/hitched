@@ -9,9 +9,9 @@ class InvitationService(object):
 
     def get_invitation(self, name="", address=""):
         if name:
-            query = {"Name": name}
+            query = {"Name": {"$regex": name, "$options": "-i"}}
         elif address:
-            query = {"Address": address}
+            query = {"Address": {"$regex": address, "$options": "-i"}}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
         guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1})
