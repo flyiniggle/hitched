@@ -9,17 +9,17 @@ class InvitationService(object):
 
     def get_invitation(self, name="", address=""):
         if name:
-            query = {"First Name": name}
+            query = {"Name": name}
         elif address:
             query = {"Address": address}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
-        guest = self.invitations.find(query)
+        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1})
 
         if guest.count() != 1:
             return InvitationServiceLookupError("Search did not match exactly 1 record", 2)
         else:
-            return guest
+            return guest[0]
 
 
 class InvitationServiceLookupError(object):

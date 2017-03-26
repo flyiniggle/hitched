@@ -62,41 +62,55 @@
     });
 
     function RSVPModel() {
-        this.name = ko.observable("");
-        this.address = ko.observable("");
-        this.guests = ko.observableArray([]);
-        this.isCamping = ko.observable(false);
-        this.regrets = ko.observable(false);
-        this.enableLookup = ko.computed(function() {
-            if (this.name()) {
-                return this.name();
-            } else if (this.address()) {
-                return this.address();
+		var self = this;
+
+        self.name = ko.observable("");
+        self.address = ko.observable("");
+        self.guests = ko.observableArray([]);
+        self.enableLookup = ko.computed(function() {
+            if (self.name()) {
+                return self.name();
+            } else if (self.address()) {
+                return self.address();
             } else {
                 return false;
             }
-        }.bind(this)).extend({throttle: 750});
+        }).extend({throttle: 750});
 
         this.enableLookup.subscribe(function() {
             var url, data;
 
-            if (this.name() === "" && this.address() === "") {
+            if (self.name() === "" && self.address() === "") {
                 return;
             }
 
-            url = this.name() ? "/guest_name" : "/guest_address";
-            data = this.name() ? {name: encodeURIComponent(this.name())} : {address: encodeURIComponent(this.address())};
+            url = self.name() ? "/guest_name" : "/guest_address";
+            data = self.name() ? {name: encodeURIComponent(self.name())} : {address: encodeURIComponent(self.address())};
 
             $.get(url, data, function(result) {
-                console.log(result);
+            	var responseJSON = JSON.parse(result),
+					plusOne, guests;
+
+				if(responseJSON.error) {
+					return;
+				}
+
+                responseJSON["Guests"].forEach(function(guest) {
+                    self.guests.push(new GuestModel(guest.name));
+                });
+
+				if(responseJSON["Plus One"] === true) {
+					self.guests.push(new GuestModel);
+				}
             });
-        }.bind(this));
+        });
     }
 
     function GuestModel(name) {
-        var guestName = name || "";
+        var guestName = name || "Plus One";
 
         this.name = ko.observable(guestName);
+        this.isComing = ko.observable(!!guestName);
         this.isVegetarain = ko.observable(false);
     }
 
