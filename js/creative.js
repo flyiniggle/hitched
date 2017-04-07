@@ -78,14 +78,23 @@
             }
         }).extend({throttle: 750});
 
+		this.address.subscribe(function() {
+			self.guests([]);
+			self.invitations([]);
+		});
+		this.name.subscribe(function() {
+			self.guests([]);
+			self.invitations([]);
+		});
+
         this.enableLookup.subscribe(function() {
             var url, data;
 
+			self.guests([]);
+			self.invitations([]);
             if (self.name() === "" && self.address() === "") {
                 return;
             }
-
-			self.guests([]);
 
             url = self.name() ? "/guest_name" : "/guest_address";
             data = self.name() ? {name: encodeURIComponent(self.name().trim().toLowerCase())} : {address: encodeURIComponent(self.address().trim().toLowerCase())};
