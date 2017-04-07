@@ -126,6 +126,7 @@
 
 	function InvitationOption(invitation) {
 		this.address = invitation.Address;
+		this.name = invitation.Name;
 	}
 
     ko.applyBindings(new RSVPModel());

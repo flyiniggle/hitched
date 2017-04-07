@@ -15,7 +15,7 @@ class InvitationService(object):
             query = {"Address": {"$regex": '^{}$'.format(re.escape(address)), "$options": "-i"}}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
-        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1, "Address": 1})
+        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1, "Address": 1, "Name": 1})
 
         if guest.count() == 1:
             return guest[0]

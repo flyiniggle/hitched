@@ -260,7 +260,7 @@
                         <div class="form-check">
                                 <label class="form-check-label">
                                         <input type="radio" class="form-check-input" name="invitations" data-bind="value: address">
-                                        <span data-bind="text: address"></span>
+                                        <span data-bind="text: (!!$root.name()) ? address : name"></span>
                                 </label>
                         </div>
                     </div>
