@@ -256,13 +256,18 @@
             </div>
             <div class="row rsvp" style="margin-top: 40px; min-height: 300px">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <div data-bind="foreach: invitations">
-                        <div class="form-check">
-                                <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="invitations" data-bind="value: address">
-                                        <span data-bind="text: (!!$root.name()) ? address : name"></span>
-                                </label>
+                    <div data-bind="visible: invitations().length">
+                        <div data-bind="foreach: invitations">
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="invitations" data-bind="
+                                                value: (!!$root.name()) ? address : name,
+                                                checked: $root.selectedInvitation">
+                                            <span data-bind="text: (!!$root.name()) ? address : name"></span>
+                                    </label>
+                            </div>
                         </div>
+                        <button type="button" class="btn btn-default btn-xl" data-bind="click: swapInput()">submit</button>
                     </div>
                     <ul class="list-group form-group" data-bind="foreach: guests">
                         <li class="list-group-item">

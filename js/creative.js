@@ -68,6 +68,7 @@
         self.address = ko.observable("");
         self.guests = ko.observableArray([]);
 		self.invitations = ko.observableArray([]);
+		self.selectedInvitation = ko.observable();
         self.enableLookup = ko.computed(function() {
             if (self.name()) {
                 return self.name();
@@ -122,6 +123,16 @@
 				}
             });
         });
+
+		this.swapInput = function() {
+			if(!!self.name()) {
+				self.name("");
+				self.address(self.selectedInvitation());
+			} else {
+				self.address("");
+				self.name(self.selectedInvitation());
+			}
+		}
     }
 
     function GuestModel(name) {
