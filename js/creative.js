@@ -67,6 +67,7 @@
         self.name = ko.observable("");
         self.address = ko.observable("");
         self.guests = ko.observableArray([]);
+		self.invitations = ko.observableArray([]);
         self.enableLookup = ko.computed(function() {
             if (self.name()) {
                 return self.name();
@@ -92,28 +93,40 @@
             $.get(url, data, function(result) {
             	var responseJSON = JSON.parse(result);
 
+				self.guests([]);
+				self.invitations([]);
 				if(responseJSON.error) {
 					return;
 				}
 
-                responseJSON.Guests.forEach(function(guest) {
-                    self.guests.push(new GuestModel(guest.Name));
-                });
-
-				if(responseJSON["Plus One"] === true) {
-					self.guests.push(new GuestModel());
+				if(responseJSON.length && responseJSON.length > 1) {
+					responseJSON.forEach(function(invitation) {
+						self.invitations.push(new InvitationOption(invitation));
+					});
+				} else if (responseJSON.Guests) {
+					responseJSON.Guests.forEach(function(guest) {
+						self.guests.push(new GuestModel(guest.Name));
+					});
+					if(responseJSON["Plus One"] === true) {
+						self.guests.push(new GuestModel());
+					}
 				}
             });
         });
     }
 
     function GuestModel(name) {
-        var guestName = name || "Plus One";
+        var guestName = name || "";
 
         this.name = ko.observable(guestName);
+		this.isPlusOne = !name;
         this.isComing = ko.observable(!!guestName);
         this.isVegetarain = ko.observable(false);
     }
+
+	function InvitationOption(invitation) {
+		this.address = invitation.Address;
+	}
 
     ko.applyBindings(new RSVPModel());
 

@@ -1,4 +1,5 @@
 import os
+import re
 import pymongo
 
 
@@ -9,17 +10,19 @@ class InvitationService(object):
 
     def get_invitation(self, name="", address=""):
         if name:
-            query = {"Name": {"$regex": name, "$options": "-i"}}
+            query = {"Name": {"$regex": '^{}$'.format(re.escape(name)), "$options": "-i"}}
         elif address:
-            query = {"Address": {"$regex": address, "$options": "-i"}}
+            query = {"Address": {"$regex": '^{}$'.format(re.escape(address)), "$options": "-i"}}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
-        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1})
+        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1, "Address": 1})
 
-        if guest.count() != 1:
-            return InvitationServiceLookupError("Search did not match exactly 1 record", 2)
-        else:
+        if guest.count() == 1:
             return guest[0]
+        elif guest.count() > 1:
+            return guest
+        else:
+            return InvitationServiceLookupError("Search did not match any records", 2)
 
 
 class InvitationServiceLookupError(object):

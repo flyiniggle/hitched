@@ -256,6 +256,14 @@
             </div>
             <div class="row rsvp" style="margin-top: 40px; min-height: 300px">
                 <div class="col-lg-8 col-lg-offset-2">
+                    <div data-bind="foreach: invitations">
+                        <div class="form-check">
+                                <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="invitations" data-bind="value: address">
+                                        <span data-bind="text: address"></span>
+                                </label>
+                        </div>
+                    </div>
                     <ul class="list-group form-group" data-bind="foreach: guests">
                         <li class="list-group-item">
                             <div class="form-group">
