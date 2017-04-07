@@ -132,7 +132,18 @@
 				self.address("");
 				self.name(self.selectedInvitation());
 			}
-		}
+		};
+
+		this.sendRSVP = function() {
+			var data = ko.toJSON(self.guests);
+
+			console.log(data);
+			/*$.get("/rsvp", data, function(result) {
+            	var responseJSON = JSON.parse(result);
+
+				console.log("woo")
+            });*/
+		};
     }
 
     function GuestModel(name) {
@@ -142,6 +153,7 @@
 		this.isPlusOne = !name;
         this.isComing = ko.observable(!!guestName);
         this.isVegetarain = ko.observable(false);
+        this.isCamping = ko.observable(false);
     }
 
 	function InvitationOption(invitation) {
