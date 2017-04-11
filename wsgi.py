@@ -1,11 +1,13 @@
 import os
 import cherrypy
 from bson.json_util import dumps
+from json import loads
 import urlparse
+from ast import literal_eval
 
 import files
 
-from lib.invitationservice import InvitationService
+from lib.invitationservice import InvitationService, InvitationServiceLookupError
 from lib.servererror import ServerError
 
 
@@ -32,6 +34,15 @@ class application(object):
             return dumps(guest)
 
     @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def rsvp(self, invitationId="", guests=""):
+        try:
+            self.invitations_service.update_invitation(invitationId, loads(guests))
+            return dumps({"ok": True})
+        except InvitationServiceLookupError:
+            return dumps(ServerError("I'm sorry, we couldn't save your RSVP right now."))
+
+    @cherrypy.expose
     def guest_name(self, name):
         guest = self.invitations_service.get_invitation(name=urlparse.unquote(str(name)))
 
@@ -39,4 +50,3 @@ class application(object):
             return dumps(ServerError("The record you were searching for could not be found."))
         else:
             return dumps(guest)
-

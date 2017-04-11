@@ -1,6 +1,7 @@
 import os
 import re
 import pymongo
+from bson.objectid import ObjectId
 
 
 class InvitationService(object):
@@ -15,7 +16,7 @@ class InvitationService(object):
             query = {"Address": {"$regex": '^{}$'.format(re.escape(address)), "$options": "-i"}}
         else:
             return InvitationServiceLookupError("No searchable attribute was found.", 1)
-        guest = self.invitations.find(query, {"_id": 0, "Guests": 1, "Plus One": 1, "Address": 1, "Name": 1})
+        guest = self.invitations.find(query, {"Guests": 1, "Plus One": 1, "Address": 1, "Name": 1})
 
         if guest.count() == 1:
             return guest[0]
@@ -23,6 +24,20 @@ class InvitationService(object):
             return guest
         else:
             return InvitationServiceLookupError("Search did not match any records", 2)
+
+    def update_invitation(self, invitationId, guests):
+        for guest in guests:
+            self.invitations.update_one(
+                {"_id": ObjectId(invitationId), "Guests.Name": guest.get("name")},
+                {
+                    "$set": {
+                        "Guests.$.isComing": guest.get("isComing", False),
+                        "Guests.$.isVegetarian": guest.get("isVegetarian", False),
+                        "Guests.$.isCamping": guest.get("isCamping", False),
+                    }
+                })
+
+        return True
 
 
 class InvitationServiceLookupError(object):

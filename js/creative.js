@@ -67,6 +67,7 @@
         self.name = ko.observable("");
         self.address = ko.observable("");
         self.guests = ko.observableArray([]);
+		self.invitationId = "";
 		self.invitations = ko.observableArray([]);
 		self.selectedInvitation = ko.observable();
         self.enableLookup = ko.computed(function() {
@@ -105,6 +106,7 @@
 
 				self.guests([]);
 				self.invitations([]);
+				self.invitationId = "";
 				if(responseJSON.error) {
 					return;
 				}
@@ -114,6 +116,7 @@
 						self.invitations.push(new InvitationOption(invitation));
 					});
 				} else if (responseJSON.Guests) {
+					self.invitationId = responseJSON._id["$oid"];
 					responseJSON.Guests.forEach(function(guest) {
 						self.guests.push(new GuestModel(guest.Name));
 					});
@@ -136,13 +139,11 @@
 
 		this.sendRSVP = function() {
 			var data = ko.toJSON(self.guests);
-
-			console.log(data);
-			/*$.get("/rsvp", data, function(result) {
+			$.post("/rsvp", {"invitationId": self.invitationId, "guests": data}, function(result) {
             	var responseJSON = JSON.parse(result);
 
-				console.log("woo")
-            });*/
+				return responseJSON;
+            });
 		};
     }
 
