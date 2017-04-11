@@ -150,13 +150,13 @@
     function GuestModel(guest) {
         var guestName = guest.Name || "plusone",
 			displayName = guest.displayName || guest.Name || "";
-
+console.log(guest)
         this.name = ko.observable(guestName);
         this.displayName = ko.observable(displayName);
 		this.isPlusOne = !guest.Name;
-        this.isComing = ko.observable(!!guestName);
-        this.isVegetarain = ko.observable(false);
-        this.isCamping = ko.observable(false);
+        this.isComing = ko.observable(!!guest.isComing);
+        this.isVegetarian = ko.observable(!!guest.isVegetarian);
+        this.isCamping = ko.observable(!!guest.isCamping);
     }
 
 	function InvitationOption(invitation) {
