@@ -271,11 +271,11 @@
                     </div>
                     <ul class="list-group form-group" data-bind="foreach: guests">
                         <li class="list-group-item">
-                            <div class="form-group" data-bind="css: {'has-error': !name()}">
+                            <div class="form-group" data-bind="css: {'has-error': !displayName()}">
                                 <label for="guestName">
                                         <h3>Guest Name:</h3>
                                 </label>
-                                <input id="guestName" class="form-control" type="text" data-bind="textInput: name, attr: {placeholder: isPlusOne ? 'Plus one' : ''}"/>
+                                <input id="guestName" class="form-control" type="text" data-bind="textInput: displayName, attr: {placeholder: isPlusOne ? 'Plus one' : ''}"/>
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">

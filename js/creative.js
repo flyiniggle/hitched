@@ -118,10 +118,10 @@
 				} else if (responseJSON.Guests) {
 					self.invitationId = responseJSON._id["$oid"];
 					responseJSON.Guests.forEach(function(guest) {
-						self.guests.push(new GuestModel(guest.Name));
+						self.guests.push(new GuestModel(guest));
 					});
 					if(responseJSON["Plus One"] === true) {
-						self.guests.push(new GuestModel());
+						self.guests.push(new GuestModel({}));
 					}
 				}
             });
@@ -141,17 +141,19 @@
 			var data = ko.toJSON(self.guests);
 			$.post("/rsvp", {"invitationId": self.invitationId, "guests": data}, function(result) {
             	var responseJSON = JSON.parse(result);
-
+				console.log(responseJSON)
 				return responseJSON;
             });
 		};
     }
 
-    function GuestModel(name) {
-        var guestName = name || "";
+    function GuestModel(guest) {
+        var guestName = guest.Name || "plusone",
+			displayName = guest.displayName || guest.Name || "";
 
         this.name = ko.observable(guestName);
-		this.isPlusOne = !name;
+        this.displayName = ko.observable(displayName);
+		this.isPlusOne = !guest.Name;
         this.isComing = ko.observable(!!guestName);
         this.isVegetarain = ko.observable(false);
         this.isCamping = ko.observable(false);
