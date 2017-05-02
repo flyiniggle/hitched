@@ -11,8 +11,20 @@ class InvitationService(object):
     invitations = db.invitations
 
     def get_invitation(self, name="", address=""):
+        if len(name) < 3 and len(address) < 4:
+            raise InvitationServiceLookupError("Please refine your query.", 2)
+
         if name:
-            query = {"Name": {"$regex": '^{}$'.format(re.escape(name)), "$options": "-i"}}
+            query = {
+                "$or": [
+                    {"Name": {"$regex": '{}'.format(re.escape(name)), "$options": "-i"}},
+                    {
+                        "Guests.Name": {
+                            "$regex": '{}'.format(re.escape(name)), "$options": "-i"
+                        }
+                    }
+                ]
+            }
         elif address:
             query = {"Address": {"$regex": '^{}$'.format(re.escape(address)), "$options": "-i"}}
         else:
