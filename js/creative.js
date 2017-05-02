@@ -106,6 +106,7 @@
 
 				self.guests([]);
 				self.invitations([]);
+				self.selectedInvitation(undefined);
 				self.invitationId = "";
 				if(responseJSON.error) {
 					return;
@@ -141,7 +142,7 @@
 			var data = ko.toJSON(self.guests);
 			$.post("/rsvp", {"invitationId": self.invitationId, "guests": data}, function(result) {
             	var responseJSON = JSON.parse(result);
-				console.log(responseJSON)
+
 				return responseJSON;
             });
 		};
@@ -150,7 +151,7 @@
     function GuestModel(guest) {
         var guestName = guest.Name || "plusone",
 			displayName = guest.displayName || guest.Name || "";
-console.log(guest)
+
         this.name = ko.observable(guestName);
         this.displayName = ko.observable(displayName);
 		this.isPlusOne = !guest.Name;
