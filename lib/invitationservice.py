@@ -26,7 +26,7 @@ class InvitationService(object):
                 ]
             }
         elif address:
-            query = {"Address": {"$regex": '^{}$'.format(re.escape(address)), "$options": "-i"}}
+            query = {"Address": {"$regex": '^{}'.format(re.escape(address)), "$options": "-i"}}
         else:
             raise InvitationServiceLookupError("No searchable attribute was found.", 1)
         guest = self.invitations.find(query, {"Guests": 1, "Plus One": 1, "Address": 1, "Name": 1})
