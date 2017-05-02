@@ -8,6 +8,10 @@ from bson.objectid import ObjectId
 class InvitationService(object):
     cursor = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'], int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
     db = cursor.hitched
+    try:
+        db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'], os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'])
+    except KeyError:
+        pass
     invitations = db.invitations
 
     def get_invitation(self, name="", address=""):
