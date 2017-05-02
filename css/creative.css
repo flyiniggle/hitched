@@ -417,3 +417,12 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
+time {
+  display: inline-block;
+  width: 100%;
+  color: #ffffff;
+  background-color: #c52c66;
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+}
