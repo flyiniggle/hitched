@@ -70,6 +70,9 @@
 		self.invitationId = "";
 		self.invitations = ko.observableArray([]);
 		self.selectedInvitation = ko.observable();
+		self.submitting = ko.observable(false);
+		self.updated = ko.observable(false);
+		self.couldNotUpdate = ko.observable(false);
         self.enableLookup = ko.computed(function() {
             if (self.name()) {
                 return self.name();
@@ -108,6 +111,8 @@
 				self.invitations([]);
 				self.selectedInvitation(undefined);
 				self.invitationId = "";
+				self.updated(false);
+				self.couldNotUpdate(false);
 				if(responseJSON.error) {
 					return;
 				}
@@ -140,10 +145,20 @@
 
 		this.sendRSVP = function() {
 			var data = ko.toJSON(self.guests);
+
+			self.submitting(true);
+			self.updated(false);
+			self.couldNotUpdate(false);
+
 			$.post("/rsvp", {"invitationId": self.invitationId, "guests": data}, function(result) {
             	var responseJSON = JSON.parse(result);
 
-				return responseJSON;
+				self.submitting(false);
+				if(responseJSON.ok) {
+					self.updated(true);
+				} else {
+					self.couldNotUpdate(true);
+				}
             });
 		};
     }

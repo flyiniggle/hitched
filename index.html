@@ -86,7 +86,7 @@
                     <h2 class="section-heading">Boothby's Orchards</h2>
                     <h3 class="section-heading">Livermore, ME</h3>
                     <hr class="light">
-                    <p class="text-faded">Boothby�s Orchard & Winery is nestled among rolling hills and fields cared for by our family for seven generations. We offer our visitors a chance to slow down and experience the charms of rural Maine life. From pick-your-own apples, wine tastings, special events and romantic getaways, we invite you to rediscover the rhythms of nature. Stop by and stay awhile.</p>
+                    <p class="text-faded">Boothby's Orchard & Winery is nestled among rolling hills and fields cared for by our family for seven generations. We offer our visitors a chance to slow down and experience the charms of rural Maine life. From pick-your-own apples, wine tastings, special events and romantic getaways, we invite you to rediscover the rhythms of nature. Stop by and stay awhile.</p>
                     <a href="http://www.boothbysorchard.com/" target="_blank" class="page-scroll btn btn-default btn-xl sr-button">More Information</a>
                     <a href="https://www.google.com/maps/place/Boothby's+Orchard/@44.372636,-70.21109,20z/data=!4m5!3m4!1s0x0:0xbb0623544e04bc64!8m2!3d44.3757924!4d-70.2052357?hl=en-US
 " target="_blank" class="page-scroll btn btn-default btn-xl sr-button">Map</a>
@@ -297,7 +297,14 @@
                             </div>
                         </li>
                     </ul>
-                    <button type="button" class="btn btn-default btn-xl" data-bind="click: sendRSVP, visible: guests().length">submit</button>
+                    <div class="alert alert-success" role="alert" data-bind="visible: updated"><strong>Saved!</strong></div>
+                    <div class="alert alert-danger" role="alert" data-bind="visible: couldNotUpdate">
+                        <strong>Oh no!</strong> We couldn't save your information right now. Please try again later.
+                    </div>
+                    <button type="button" class="btn btn-default btn-xl" data-bind="click: sendRSVP, visible: guests().length">
+                        <span class="fa fa-circle-o-notch fa-spin" data-bind="visible: submitting"></span>
+                        <span data-bind="visisble: !submitting">submit</span>
+                    </button>
                 </div>
             </div>
         </div>

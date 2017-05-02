@@ -57,8 +57,6 @@ class InvitationService(object):
                             "Plus One": False
                         }
                     })
-
-                result
             else:
                 result = self.invitations.update_one(
                     {"_id": ObjectId(invitationId), "Guests.Name": guest.get("name")},
