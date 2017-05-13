@@ -421,7 +421,13 @@ body {
   display: inline-block;
   width: 6em;
   line-height: normal;
-  margin: -10px 15px -10px -15px;
+  margin-right: 1em;
   padding: inherit;
   font-size: initial;
+  vertical-align: middle;
+}
+.eventDetail {
+  display: inline-block;
+  width: 60%;
+  vertical-align: middle;
 }
