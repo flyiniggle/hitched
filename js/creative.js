@@ -171,7 +171,7 @@
         this.displayName = ko.observable(displayName);
 		this.isPlusOne = !guest.Name;
         this.isComing = ko.observable(!!guest.isComing);
-        this.isVegetarian = ko.observable(!!guest.isVegetarian);
+        this.foodPreference = ko.observable(guest.foodPreference);
         this.isCamping = ko.observable(!!guest.isCamping);
     }
 

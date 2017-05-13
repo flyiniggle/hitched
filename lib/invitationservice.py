@@ -53,7 +53,7 @@ class InvitationService(object):
                         "$addToSet": {
                             "Guests": {
                                 "isComing": guest.get("isComing", False),
-                                "isVegetarian": guest.get("isVegetarian", False),
+                                "foodPreference": guest.get("foodPreference", ""),
                                 "isCamping": guest.get("isCamping", False),
                                 "displayName": guest.get("displayName", ""),
                                 "Name": guest.get("displayName", "")
@@ -69,7 +69,7 @@ class InvitationService(object):
                     {
                         "$set": {
                             "Guests.$.isComing": guest.get("isComing", False),
-                            "Guests.$.isVegetarian": guest.get("isVegetarian", False),
+                            "Guests.$.foodPreference": guest.get("foodPreference", ""),
                             "Guests.$.isCamping": guest.get("isCamping", False),
                             "Guests.$.displayName": guest.get("displayName", "")
                         }
