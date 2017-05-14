@@ -417,9 +417,12 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
+.reservationInfo {
+  text-align: left;
+}
 #scheduleList > li > .label {
   display: inline-block;
-  width: 6em;
+  width: 7em;
   line-height: normal;
   margin-right: 1em;
   padding: inherit;
