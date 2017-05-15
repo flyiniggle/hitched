@@ -54,7 +54,7 @@ class application(object):
     @cherrypy.expose
     def loaddb(self):
         loaded_invites = []
-        with open('invitations.json') as json_data:
+        with open(os.path.join(files.get_root(), 'invitations.json')) as json_data:
             data = load(json_data)
             json_data.close()
         for invite in data:
