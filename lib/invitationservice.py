@@ -56,7 +56,7 @@ class InvitationService(object):
                                 "foodPreference": guest.get("foodPreference", ""),
                                 "isCamping": guest.get("isCamping", False),
                                 "displayName": guest.get("displayName", ""),
-                                "Name": guest.get("displayName", "")
+                                "Name": guest.get("displayName", "") if guest.get("displayName", "") != "" else "plus one"
                             }
                         },
                         "$set": {
