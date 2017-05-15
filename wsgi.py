@@ -51,7 +51,7 @@ class application(object):
         else:
             return json_util.dumps(guest)
 
-    @cherrypy.expose
+    """@cherrypy.expose
     def loaddb(self):
         loaded_invites = []
         with open(os.path.join(files.get_root(), 'invitations.json')) as json_data:
@@ -59,6 +59,6 @@ class application(object):
             json_data.close()
         for invite in data:
             del invite['_id']
-            loaded_invites.append(self.invitations_service.load(invite))
+            loaded_invites.append(self.invitations_service.load(invite))"""
 
         return dumps(loaded_invites)
