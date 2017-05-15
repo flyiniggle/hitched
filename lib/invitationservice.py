@@ -6,8 +6,6 @@ from bson.objectid import ObjectId
 
 
 class InvitationService(object):
-
-
     try:
         cursor = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'], int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
     except KeyError:
@@ -78,6 +76,11 @@ class InvitationService(object):
                 raise InvitationServiceLookupError("Update did not match any records.", 2)
 
         return True
+
+    def load(self, data):
+        self.invitations.insert(data)
+        del data['_id']
+        return data
 
 
 class InvitationServiceLookupError(BaseException):
