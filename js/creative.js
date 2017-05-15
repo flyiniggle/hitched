@@ -166,7 +166,7 @@
     function GuestModel(guest) {
         var guestName = guest.Name || "plusone",
 			displayName = guest.displayName || guest.Name || "";
-console.log(guest.isComing)
+
         this.name = ko.observable(guestName);
         this.displayName = ko.observable(displayName);
 		this.isPlusOne = !guest.Name;
