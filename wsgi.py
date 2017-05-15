@@ -59,6 +59,6 @@ class application(object):
             json_data.close()
         for invite in data:
             del invite['_id']
-            loaded_invites.append(self.invitations_service.load(invite))"""
+            loaded_invites.append(self.invitations_service.load(invite))
 
-        return dumps(loaded_invites)
+        return dumps(loaded_invites)"""
